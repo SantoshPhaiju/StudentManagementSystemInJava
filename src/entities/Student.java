@@ -1,5 +1,6 @@
 package entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Student {
@@ -8,7 +9,7 @@ public class Student {
     private String email;
     private String gender;
 
-    private List<Course> courses;
+    private List<Course> courses = new ArrayList<>();
 
     public Student() {
 

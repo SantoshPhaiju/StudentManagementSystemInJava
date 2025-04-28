@@ -1,5 +1,6 @@
 import Service.StudentService;
 import Service.StudentServiceImpl;
+import entities.Course;
 import entities.Student;
 
 import java.util.List;
@@ -7,8 +8,6 @@ import java.util.*;
 
 
 public class MainClass {
-
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         StudentService studentService = new StudentServiceImpl();
@@ -17,7 +16,7 @@ public class MainClass {
 
         while (runProgram) {
             int choice;
-            System.out.println("Enter \n 1 to add \n 2 to remove \n 3 update \n 4 fetch students \n 5 to exit program");
+            System.out.println("Enter \n 1 to add \n 2 to remove \n 3 update \n 4 fetch students \n 5 to exit program \n 6 to add course");
             choice = scanner.nextInt();
             scanner.nextLine();
 
@@ -85,17 +84,45 @@ public class MainClass {
                     studentService.updateStudent(indexToUpdate, updatedStudent);
                     break;
                 case 4:
-                    // delete student
-                    // ask index
-                    // delete in index
+                    // get all students
+                    // display all students
                     List<Student> students = studentService.getStudentList();
                     System.out.println("-----Displaying all students in the list----");
                     for (Student stdData : students) {
                         System.out.println(stdData.getName() + " " + stdData.getAge() + " " + stdData.getEmail() + " " + stdData.getGender());
+
+                        if (stdData.getCourses() != null) {
+                            for (Course course : stdData.getCourses()) {
+                                System.out.println(course.getCourseId() + " " + course.getCourseName());
+                            }
+                        }
                     }
                     break;
                 case 5:
                     runProgram = false;
+                    break;
+
+                case 6:
+                    // take student name from user and find index
+                    System.out.println("Enter the student name:- ");
+                    String stdName = scanner.nextLine();
+                    Student newStd = new Student();
+
+                    for (Student stdData : studentService.getStudentList()) {
+                        if (stdData.getName().equals(stdName)) {
+                            newStd = stdData;
+                        }
+                    }
+
+                    // take course data from the user
+                    System.out.println("Enter the course to add:- ");
+                    System.out.println("Enter course name: ");
+                    String courseName = scanner.nextLine();
+                    System.out.println("Enter course id to add: ");
+                    String courseId = scanner.nextLine();
+                    Course newCourse = new Course(courseId, courseName);
+                    newStd.getCourses().add(newCourse);
+                    System.out.println(courseName + " added successfully !!!");
                     break;
                 default:
                     System.out.println("Invalid choice");
