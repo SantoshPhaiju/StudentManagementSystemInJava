@@ -16,9 +16,10 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student removeStudent(Student student) {
-        this.studentList.remove(student);
-        return student;
+    public Student removeStudent(int index) {
+        Student removedStudent = studentList.get(index);
+        this.studentList.remove(removedStudent);
+        return removedStudent;
     }
 
     @Override
